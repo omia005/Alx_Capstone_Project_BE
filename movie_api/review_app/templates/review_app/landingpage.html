@@ -6,6 +6,14 @@
 
 {% block content %}
   <div>
-    
+    <h2>Movie Review APP</h2>
+    <p>Rieview Movies You Have Watched in 2025!</p>
+  </div>
+  <div>
+    <form class='form-with-validation' action='/review_app/landingpage' method='post'>
+      {% csrf_token %}
+      {{form.as_p}}
+    </form>
+    <p>Do you have an account already?<a href = "{% url 'login' %}">Login</a></p> 
   </div>
 {% endblock %}

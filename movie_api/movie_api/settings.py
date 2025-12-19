@@ -12,6 +12,17 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+# For Django 4.0+ compatibility
+import pymysql
+from django.core.management.commands.runserver import Command as runserver
+
+# Adjust default port if needed
+runserver.default_port = "8000"
+
+# Ensure PyMySQL is used
+pymysql.version_info = (2, 2, 1, "final", 0)
+pymysql.install_as_MySQLdb()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
