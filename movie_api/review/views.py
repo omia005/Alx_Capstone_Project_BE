@@ -1,6 +1,6 @@
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
+from django.urls import reverse_lazy
 from .models import Review
 from .forms import ReviewForm
 from movies.models import Movie
@@ -8,7 +8,7 @@ from movies.models import Movie
 #create your views here
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
-    form_class = ReviewForm
+    fields = ["content", "rating"]
     template_name = "review/review_form.html"
 
     def form_valid(self, form):
@@ -18,4 +18,4 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("movie-detail", kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy("movie-detail", kwargs={"pk": self.kwargs["pk"]})

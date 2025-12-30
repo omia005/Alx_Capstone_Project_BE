@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  <a href="{% url 'review-add' movie.pk %}">Add Review</a>
-{% else %}
-  <p><a href="{% url 'login' %}">Login</a> to add a review.</p>
-{% endif %}
+   <h1>Add Review</h1>
+
+   <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+   </form>
+
 {% endblock %}
