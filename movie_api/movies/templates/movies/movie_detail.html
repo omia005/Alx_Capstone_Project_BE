@@ -1,29 +1,31 @@
-{% extends './base.html' %}
-
-{% block title %}
-  <title> movie detail</title>
-{% endblock %}
-
+{% extends "base.html" %}
 {% block content %}
-<h1>{{ movie.title }}</h1>
-<p>{{ movie.description }}</p>
-<p>Released: {{ movie.release_year }}</p>
+
+<div class="card">
+    <h1>{{ movie.title }}</h1>
+    <p>{{ movie.description }}</p>
+    <p><strong>Released:</strong> {{ movie.release_year }}</p>
+
+    {% if user.is_authenticated %}
+        <a class="btn" href="{% url 'review-add' movie.pk %}">Add Review</a>
+    {% endif %}
+</div>
 
 <h2>Reviews</h2>
-<ul>
-  {% for review in movie.reviews.all %}
-    <li>
-      <strong>{{ review.user.username }}</strong>:
-      {{ review.content }} ({{ review.rating }}/5)
-    </li>
-  {% empty %}
-    <li>No reviews yet.</li>
-  {% endfor %}
-</ul>
-{% if user.is_authenticated %}
-  <a href="{% url 'review-add' movie.pk %}">Add Review</a>
-{% else %}
-  <p><a href="{% url 'login' %}">Login</a> to add a review.</p>
-{% endif %}
+
+{% for review in movie.reviews.all %}
+    <div class="review-card">
+        <strong>{{ review.user.username }}</strong>
+        <span class="rating">{{ review.rating }}/5 ⭐</span>
+        <p>{{ review.content }}</p>
+
+        {% if review.user == user %}
+            <a class="btn-sm" href="{% url 'review-edit' review.pk %}">Edit</a>
+            <a class="btn-sm danger" href="{% url 'review-delete' review.pk %}">Delete</a>
+        {% endif %}
+    </div>
+{% empty %}
+    <p>No reviews yet.</p>
+{% endfor %}
 
 {% endblock %}
