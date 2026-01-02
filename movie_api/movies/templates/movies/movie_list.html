@@ -1,21 +1,25 @@
-{% extends 'base.html'%}
+{% extends "base.html" %}
+{% block content %}
 
-{% block title%}
-  <title>movie list</title>
-{% endblock %}
+<h1>Movies</h1>
 
-{% block content%}
-  <h1>Movies</h1>
-
-  <ul>
+<div class="movie-grid">
     {% for movie in movies %}
-      <li>
-        <a href="{% url 'movie-detail' movie.pk %}">
-          {{ movie.title }} ({{ movie.release_year }})
-        </a>
-      </li>
-     {% empty %}
-      <li>No movies available.</li>
+        <div class="card">
+           <div>
+             {% if movie.poster %}
+                <img src="{{ movie.poster.url }}" class="poster">
+             {% else %}
+                <img src="via.placeholder.com" class="poster">
+             {% endif %}
+           </div>
+            <h3>{{ movie.title }}</h3>
+            <p>{{ movie.release_year }}</p>
+            <a class="btn" href="{% url 'movie-detail' movie.pk %}">View</a>
+        </div>
+    {% empty %}
+        <p>No movies available.</p>
     {% endfor %}
-  </ul>
+</div>
+
 {% endblock %}

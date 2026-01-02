@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card">
-    <h1>{{ movie.title }}</h1>
-    <p>{{ movie.description }}</p>
-    <p><strong>Released:</strong> {{ movie.release_year }}</p>
-
-    {% if user.is_authenticated %}
-        <a class="btn" href="{% url 'review-add' movie.pk %}">Add Review</a>
+<div class="card movie-detail">
+    {% if movie.poster %}
+        <img src="{{ movie.poster.url }}" class="poster-large">
     {% endif %}
+
+    <div class="movie-info">
+        <h1>{{ movie.title }}</h1>
+        <p>{{ movie.description }}</p>
+        <p><strong>Released:</strong> {{ movie.release_year }}</p>
+
+        {% if user.is_authenticated %}
+            <a class="btn" href="{% url 'review-add' movie.pk %}">Add Review</a>
+        {% endif %}
+    </div>
 </div>
+
 
 <h2>Reviews</h2>
 

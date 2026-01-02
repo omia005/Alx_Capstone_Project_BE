@@ -47,7 +47,8 @@ class ReviewSearchView(ListView):
     model = Review
     template_name = "review/review_search.html"
     context_object_name = "reviews"
-
+    paginate_by = 5
+    
     def get_queryset(self):
         queryset = Review.objects.select_related("movie", "user")
 
