@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Search Reviews</h1>
+
+<form method="get" class="form-card">
+    <p>
+        <label>Movie Title</label><br>
+        <input type="text" name="q" value="{{ request.GET.q }}">
+    </p>
+
+    <p>
+        <label>Rating</label><br>
+        <select name="rating">
+            <option value="">All</option>
+            {% for i in "12345" %}
+                <option value="{{ i }}" {% if request.GET.rating == i %}selected{% endif %}>
+                    {{ i }} Star{{ i|pluralize }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <button class="btn" type="submit">Search</button>
+</form>
+
+<hr>
+
+{% for review in reviews %}
+    <div class="review-card">
+        <strong>{{ review.movie.title }}</strong>
+        <span class="rating">{{ review.rating }}/5 ⭐</span>
+
+        <p>{{ review.content }}</p>
+        <small>By {{ review.user.username }}</small>
+    </div>
+{% empty %}
+    <p>No reviews found.</p>
+{% endfor %}
+
+{% endblock %}

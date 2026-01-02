@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+}
+
+.navbar {
+    background: #1f2933;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.nav-brand {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card, .review-card, .form-card {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.review-card {
+    border-left: 5px solid #2563eb;
+}
+
+.rating {
+    float: right;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+.btn-sm {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.btn-sm:hover, .btn-sm:visited{
+   color:hsla(224, 76%, 48%, 0.785)
+}
+
+.danger:hover {
+    color:hsla(224, 76%, 48%, 0.785)
+}
+
+form p {
+    margin-bottom: 10px;
+}
