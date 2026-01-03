@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import django_heroku
+import dj_database_url
+from pathlib import Path,os
 
-from pathlib import Path
+
 
 # For Django 4.0+ compatibility
 import pymysql
@@ -34,9 +37,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f*a-q%+geajd=#vn%e!y@)jp&grnxosuk5chx%e=j*!eu^b!(8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "localhost", "127.0.0.1", ".onrender.com"]
 
 
 # Application definition
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware"
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -61,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ROOT_URLCONF = 'movie_api.urls'
 
@@ -88,11 +94,14 @@ WSGI_APPLICATION = 'movie_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'movie_review_db',
-        'USER':'root',
-        'PASSWORD':'0938@2022Ab',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'NAME': os.getenv('movie_review_db'),
+        'USER':os.getenv('root'),
+        'PASSWORD':os.getenv('0938@2022Ab'),
+        'HOST':os.getenv('localhost'),
+        'PORT':os.getenv('3306'),
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
@@ -133,7 +142,9 @@ USE_TZ = True
 
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = '/static/'
+django_heroku.settings(locals())
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
